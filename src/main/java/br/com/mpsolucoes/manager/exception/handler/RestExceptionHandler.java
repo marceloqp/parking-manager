@@ -3,7 +3,6 @@ package br.com.mpsolucoes.manager.exception.handler;
 
 import br.com.mpsolucoes.manager.configuration.constants.MensagemConstants;
 import br.com.mpsolucoes.manager.domain.dto.response.RestErrorResponse;
-import br.com.mpsolucoes.manager.exception.AlreadyExistsException;
 import br.com.mpsolucoes.manager.exception.BusinessException;
 import br.com.mpsolucoes.manager.exception.RecordNotFoundException;
 import jakarta.validation.ConstraintViolation;
@@ -50,7 +49,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return createErrorResponse(request, HttpStatus.NOT_FOUND, exception, exception.getMessage(), fieldErrors);
     }
 
-    @ExceptionHandler({ AlreadyExistsException.class, BusinessException.class })
+    @ExceptionHandler({ BusinessException.class })
     ResponseEntity<RestErrorResponse> handleBusiness(final WebRequest request, final BusinessException exception) {
         final List<RestErrorResponse.FieldError> fieldErrors = Collections.emptyList();
 
@@ -83,7 +82,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException exception, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         final List<RestErrorResponse.FieldError> fieldErrors = new ArrayList<>();
 
-        exception.getParameterValidationResults().forEach(bindingResult -> {
+        exception.getAllValidationResults().forEach(bindingResult -> {
             for (MessageSourceResolvable error : bindingResult.getResolvableErrors()) {
                 fieldErrors.add(new RestErrorResponse.FieldError(bindingResult.getMethodParameter().getParameterName(), error.getDefaultMessage()));
             }

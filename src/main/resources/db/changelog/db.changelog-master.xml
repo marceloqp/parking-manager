@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="marcelo.pinheiro">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS parking_manager;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="marcelo.pinheiro">
+        <createTable ifNotExists="true" schemaName="parking_manager" tableName="sector">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sector" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="base_price" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_capacity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_parking_time" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="open_hour" type="time"/>
+            <column name="close_hour" type="time"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="marcelo.pinheiro">
+        <createTable ifNotExists="true" schemaName="parking_manager" tableName="spot">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sector_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lat" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lng" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="occupied" type="boolean" defaultValue="false"/>
+            <column name="license_plate" type="varchar(7)"/>
+            <column name="entry_time" type="TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="sector_id"
+                                 baseTableSchemaName="parking_manager"
+                                 baseTableName="spot"
+                                 constraintName="fk_spot_sector_id"
+                                 referencedColumnNames="id"
+                                 referencedTableSchemaName="parking_manager"
+                                 referencedTableName="sector"/>
+    </changeSet>
+
+    <changeSet id="4" author="marcelo.pinheiro">
+        <createTable ifNotExists="true" schemaName="parking_manager" tableName="parking">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="spot_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="license_plate" type="varchar(7)"/>
+            <column name="entry_time" type="timestamp"/>
+            <column name="exit_time" type="timestamp"/>
+            <column name="amount" type="decimal"/>
+            <column name="parking_time" type="int"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="spot_id"
+                                 baseTableSchemaName="parking_manager"
+                                 baseTableName="parking"
+                                 constraintName="fk_parking_spot_id"
+                                 referencedColumnNames="id"
+                                 referencedTableSchemaName="parking_manager"
+                                 referencedTableName="spot"/>
+    </changeSet>
+
+</databaseChangeLog>
