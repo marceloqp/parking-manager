@@ -27,8 +27,8 @@ public class SpotController {
 
     @GetMapping(path = "/spot-status", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-            summary = "",
-            description = "",
+            summary = "Busca uma vaga",
+            description = "Permite buscar uma vaga usando latitude e longitude",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Vaga encontrada", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = SpotResponse.class))),
                     @ApiResponse(responseCode = "404", description = "Vaga não encontrada.", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RestErrorResponse.class)))
