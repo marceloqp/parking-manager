@@ -17,4 +17,7 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
 
     @Query("SELECT p FROM Parking p WHERE p.spot.id = :spotId AND p.exitTime is null")
     Optional<Parking> findActualParkingBySpotId(Long spotId);
+
+    @Query("SELECT p FROM Parking p WHERE p.spot.licensePlate = :plate AND p.exitTime is null")
+    Optional<Parking> findActualParkingByPlate(String plate);
 }

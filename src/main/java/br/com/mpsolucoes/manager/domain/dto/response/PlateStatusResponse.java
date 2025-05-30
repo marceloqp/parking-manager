@@ -1,18 +1,21 @@
 package br.com.mpsolucoes.manager.domain.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Data
+@Builder
 public class PlateStatusResponse {
 
     @JsonProperty("license_plate")
     private String licensePlate;
 
     @JsonProperty("price_until_now")
-    private Double priceUntilNow;
+    private BigDecimal priceUntilNow;
 
     @JsonProperty("entry_time")
     private OffsetDateTime entryTime;
