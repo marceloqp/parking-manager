@@ -25,10 +25,10 @@ public class RevenueController {
 
     @PostMapping(path = "/revenue", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-            summary = "Revenue query",
-            description = "Resources to get Revenue info",
+            summary = "Informações de faturamento",
+            description = "Permite buscar o faturamento por setor e data",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Revenue info found", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RevenueResponse.class)))
+                    @ApiResponse(responseCode = "200", description = "Faturamento encontrado", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RevenueResponse.class)))
             }
     )
     public ResponseEntity<RevenueResponse> get(@RequestBody @Valid RevenueRequest request) {
