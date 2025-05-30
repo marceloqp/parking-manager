@@ -8,9 +8,9 @@ spring:
         name: parking-manager
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/manager
-        username: postgresUser
-        password: postgresPass
+        url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/manager}
+        username: ${SPRING_DATASOURCE_USERNAME:postgresUser}
+        password: ${SPRING_DATASOURCE_PASSWORD:postgresPass}
         driver-class-name: org.postgresql.Driver
         hikari:
             maximum-pool-size: 10

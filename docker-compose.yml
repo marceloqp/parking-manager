@@ -19,8 +19,28 @@ services:
       - PGDATA=/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - localHost
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 10s
       retries: 3
+
+  parking-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      - postgres
+    networks:
+      - localHost
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/manager
+      SPRING_DATASOURCE_USERNAME: postgresUser
+      SPRING_DATASOURCE_PASSWORD: postgresPass
+
+networks:
+  localHost:
