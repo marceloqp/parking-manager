@@ -2,6 +2,7 @@ package br.com.mpsolucoes.manager.controller;
 
 import br.com.mpsolucoes.manager.domain.dto.request.EventRequest;
 import br.com.mpsolucoes.manager.domain.dto.response.RestErrorResponse;
+import br.com.mpsolucoes.manager.exception.BusinessException;
 import br.com.mpsolucoes.manager.service.WebHookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,17 +25,17 @@ public class WebHookController {
 
     private final WebHookService webHookService;
 
-    @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-            summary = "",
-            description = "",
+            summary = "Recebe os eventos",
+            description = "Recebe os eventos para serem consumidos pelo webhook",
             responses = {
-                    @ApiResponse(responseCode = "202", description = "Event accepted", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
-                    @ApiResponse(responseCode = "400", description = "", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RestErrorResponse.class))),
-                    @ApiResponse(responseCode = "422", description = "", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RestErrorResponse.class))),
+                    @ApiResponse(responseCode = "202", description = "Evento aceito", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
+                    @ApiResponse(responseCode = "400", description = "Um ou mais campos são inválidos", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RestErrorResponse.class))),
+                    @ApiResponse(responseCode = "422", description = "Erro de regra de negócio", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RestErrorResponse.class))),
             }
     )
-    public ResponseEntity<Void> handle(@Parameter(description = "", required = true) @Valid @RequestBody final EventRequest request) {
+    public ResponseEntity<Void> handle(@Parameter(description = "", required = true) @Valid @RequestBody final EventRequest request) throws BusinessException {
         webHookService.handle(request);
         return ResponseEntity.accepted().build();
     }

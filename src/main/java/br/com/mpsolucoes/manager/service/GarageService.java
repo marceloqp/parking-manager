@@ -26,7 +26,13 @@ public class GarageService {
 
     public GarageResponse get() {
 
-        getGarageStatus();
+        var status = getGarageStatus();
+        if (Boolean.FALSE.equals(status.getStatus())) {
+            status.setStatus(Boolean.TRUE);
+            garageStatusRepository.save(status);
+        } else {
+            garageStatusRepository.save(new GarageStatus(Boolean.TRUE));
+        }
         List<Sector> sectors = sectorRepository.findAll();
         List<Spot> spots = spotRepository.findAll();
 
@@ -37,16 +43,11 @@ public class GarageService {
                 .build();
     }
 
-    private void getGarageStatus() {
+    public GarageStatus getGarageStatus() {
         var status = garageStatusRepository.findAll();
-        if(status.iterator().hasNext()){
-            var statusFound = status.iterator().next();
-           if(Boolean.FALSE.equals(statusFound.getStatus())){
-               statusFound.setStatus(Boolean.TRUE);
-               garageStatusRepository.save(statusFound);
-            }
-        } else{
-            garageStatusRepository.save(new GarageStatus(Boolean.TRUE));
+        if (status.iterator().hasNext()) {
+            return status.iterator().next();
         }
+        return new GarageStatus(Boolean.FALSE);
     }
 }
