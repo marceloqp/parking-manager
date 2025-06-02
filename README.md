@@ -9,6 +9,7 @@ Sistema teste para gerenciamento de geragem, contendo endpoints para entrada e s
 - **Maven**
 - **Postgres** com Liquibase para gerenciamento de versões de entidades.
 - **Springdoc OpenAPI**
+- **Redis**
 
 ## Iniciando o Projeto
 
