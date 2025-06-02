@@ -22,10 +22,10 @@ public class GarageController {
 
     @GetMapping(path = "/garage", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-            summary = "",
-            description = "",
+            summary = "Busca as informações de garagem",
+            description = "Retorna as informações de garagem e abre a cancela para a entrada de veículos",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Garage found", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = GarageResponse.class)))
+                    @ApiResponse(responseCode = "200", description = "Garagem encontrada", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = GarageResponse.class)))
             }
     )
     public ResponseEntity<GarageResponse> get() {

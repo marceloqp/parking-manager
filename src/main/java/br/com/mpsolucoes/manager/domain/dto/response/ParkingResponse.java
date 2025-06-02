@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @Builder
 public class ParkingResponse {
-    private List<GarageResponse> garage;
+    private List<SectorResponse> garage;
     private List<SpotResponse> spots;
 }

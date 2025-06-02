@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
 public interface SpotMapper {
 
@@ -14,4 +16,6 @@ public interface SpotMapper {
 
     @Mapping(source = "sector.sectorName", target = "sector")
     SpotResponse mapToResponse(Spot entity);
+
+    List<SpotResponse> mapToListResponse(List<Spot> entities);
 }
