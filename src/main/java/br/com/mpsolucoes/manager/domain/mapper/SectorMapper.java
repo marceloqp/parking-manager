@@ -15,6 +15,7 @@ public interface SectorMapper {
     SectorMapper INSTANCE = Mappers.getMapper(SectorMapper.class);
 
     @Mapping(source = "sectorName", target = "sector")
+    @Mapping(source = "maxParkingTime", target = "durationLimitMinutes")
     SectorResponse mapToResponse(Sector entity);
 
     List<SectorResponse> mapToListResponse(List<Sector> entities);
