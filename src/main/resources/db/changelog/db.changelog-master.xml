@@ -82,4 +82,15 @@
                                  referencedTableName="spot"/>
     </changeSet>
 
+    <changeSet id="5" author="marcelo.pinheiro">
+        <sql>
+            INSERT INTO parking_manager.sector
+            (sector, base_price, max_capacity, max_parking_time, open_hour, close_hour)
+            VALUES('A', 1.0, 100, 300, '08:00:00', '22:00:00');
+            INSERT INTO parking_manager.spot
+            (sector_id, lat, lng, occupied, license_plate, entry_time)
+            VALUES(1, -23.395739912658374, -51.917937611721925, false, NULL, NULL);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
